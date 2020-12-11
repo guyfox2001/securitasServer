@@ -3,7 +3,7 @@ package com.restfulapi.securitas.response;
 public class AuthResponse extends BaseResponse {
 
     String OurJwt;
-    AuthResponse(String _OurResp, int _code, String Jwt) {
+    public AuthResponse(String _OurResp, int _code, String Jwt) {
         super(_OurResp, _code);
         this.OurJwt = Jwt;
     }

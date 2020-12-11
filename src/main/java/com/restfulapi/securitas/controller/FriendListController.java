@@ -1,5 +1,6 @@
 package com.restfulapi.securitas.controller;
 
+
 import com.restfulapi.securitas.repository.FriendListRepo;
 import com.restfulapi.securitas.repository.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,5 @@ public class FriendListController {
     //
     //@PostMapping("/friend") show
     //show all
-
 }
+

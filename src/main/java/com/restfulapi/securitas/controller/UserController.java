@@ -8,6 +8,9 @@ import com.restfulapi.securitas.security.JwtUtil;
 import com.restfulapi.securitas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,8 +51,21 @@ public class UserController {
     }
     @PostMapping("/login")
     public AuthResponse login_user(@RequestBody User loggingUser){
-
+        try {
+            AuthManager.authenticate(new UsernamePasswordAuthenticationToken(loggingUser.getUsername(), loggingUser.getHASHpassword()));
+        }
+        catch (BadCredentialsException e){
+            return  new AuthResponse("Failed: Username or password wrong", 4, "");
+        }
+        final UserDetails userDetails = User_Service.loadUserByUsername(loggingUser.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails);
+        return new AuthResponse("Succes!", 0 , jwt);
     }
+//    @PostMapping("/loginNFC")
+//    public AuthResponse login_user(@RequestHeader("Auth") Long NFCid){
+//
+//
+//    }
     @DeleteMapping("/account")
     public BaseResponse delete_user(@RequestHeader("Auth") String username){
         UserRepos.deleteUser(username);
