@@ -55,4 +55,5 @@ public class UserRepo {
     public void deleteUser(String user_name){
         JT.update("delete from users where username = ?",user_name);
     }
+    public void deleteUser(Long NFC_id){ JT.update("delete from users where nfcid = ?",NFC_id); }
 }
