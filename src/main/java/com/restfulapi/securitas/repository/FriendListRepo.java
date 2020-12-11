@@ -18,7 +18,7 @@ public class FriendListRepo {
     }
 
     public boolean already_friends(String user_1, String user_2){
-        //чем заменить
+        //check
         try {
             JT.queryForObject("select sender from friendlist where (user_1 = ? and user_2 = ?" +
                             "or (user_1 = ? and user_2 = ?)",
