@@ -2,6 +2,7 @@ package com.restfulapi.securitas.controller;
 
 import com.restfulapi.securitas.domain.User;
 import com.restfulapi.securitas.repository.UserRepo;
+import com.restfulapi.securitas.response.AuthResponse;
 import com.restfulapi.securitas.response.BaseResponse;
 import com.restfulapi.securitas.security.JwtUtil;
 import com.restfulapi.securitas.service.UserService;
@@ -31,10 +32,10 @@ public class UserController {
     }
 
     @PostMapping("/account")
-    public BaseResponse account_create(@RequestBody User addingUser){
-        if(addingUser.getUsername().equals("") ||
-            addingUser.getName().equals("") ||
-                addingUser.getHASHpassword().equals("")
+    public BaseResponse create_user(@RequestBody User addingUser){
+        if(addingUser.getUsername() == null ||
+            addingUser.getName() == null ||
+                addingUser.getHASHpassword() == null
         )
             return new BaseResponse("Failed: Bad DataRequest", 3);
         if (UserRepos.check_account(addingUser.getUsername()))
@@ -45,8 +46,12 @@ public class UserController {
         UserRepos.insertUser(addingUser);
         return new BaseResponse("Succes!", 0);
     }
+    @PostMapping("/login")
+    public AuthResponse login_user(@RequestBody User loggingUser){
+
+    }
     @DeleteMapping("/account")
-    public BaseResponse delete_account(@RequestHeader("Auth") String username){
+    public BaseResponse delete_user(@RequestHeader("Auth") String username){
         UserRepos.deleteUser(username);
         return new BaseResponse("Succes!", 0);
     }

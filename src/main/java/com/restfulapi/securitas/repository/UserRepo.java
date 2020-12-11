@@ -71,19 +71,25 @@ public class UserRepo {
         }
     }
     public boolean check_account(String username){
+        try{
         com.restfulapi.securitas.domain.User _chek =
                 JT.queryForObject("select * from users where username = ?",
                         new Object[]{username},
                         new UserMapper());
-        if (_chek == null) return false;
-        else return true;
+            return true;
+        }catch (EmptyResultDataAccessException e) {
+            return false;
+        }
     }
     public boolean check_account(Long NFCid){
-        com.restfulapi.securitas.domain.User _chek =
-                JT.queryForObject("select * from users where nfcid = ?",
-                        new Object[]{NFCid},
-                        new UserMapper());
-        if (_chek == null) return false;
-        else return true;
+        try{
+            com.restfulapi.securitas.domain.User _chek =
+                    JT.queryForObject("select * from users where nfcid = ?",
+                            new Object[]{NFCid},
+                            new UserMapper());
+            return true;
+        }catch (EmptyResultDataAccessException e) {
+            return false;
+        }
     }
 }
