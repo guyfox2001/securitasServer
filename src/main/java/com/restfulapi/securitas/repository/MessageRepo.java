@@ -43,18 +43,6 @@ public class MessageRepo {
 
     }
 
-    public void upd_message(Message text){
-        JT.update("update messages set f_user = ?, t_user = ?, text = ?, time = ?, " +
-                        "read = ?, chat_id = ? where chat_id = ?",
-                text.get_f_user(),
-                text.get_t_user(),
-                text.get_text(),
-                text.get_time(),
-                text.read(),
-                text.getChat_id()
-        );
-    }
-
     public UUID getChat_id(String f_user, String s_user){
         return JT.queryForObject("select if from chats where (?, ?) in" +
                         "(user_1, user_2), (user_2, user_1))",
@@ -72,17 +60,12 @@ public class MessageRepo {
         return chats;
     }
 
-    private String get_last_m_text(UUID chat_id){
-        return JT.queryForObject("select text from messages where chat_id = ? " +
-                "order by time desc limit 1", new Object[]{chat_id}, String.class);
-    }
-
     public void add_chat(Chat chat){
         JT.update("insert into chats (id, user_1, user_2) values (?, ?, ?)",
                 chat.get_id(), chat.get_first(), chat.get_sec());
     }
 
-    public void delete_dialog(UUID id){
+    public void delete_chat(UUID id){
         JT.update("delete from messages where chat_id = ?", id);
         JT.update("delete from chats where id = ?", id);
     }
