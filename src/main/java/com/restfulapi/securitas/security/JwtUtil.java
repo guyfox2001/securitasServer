@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
     // с помощью этого ключа генерируются токены
-    private final String SECRET_KEY = "dtq70sSAPgEOhciu1j1YZgOrM2IB8636bEYGZwcKZ5aBsHtxhVVnT5RV70cpqfz";
+    private final String SECRET_KEY = "dtq70sSAPgEOhciuHUI1YZgOrM2IB8636bEYGZwcKZ5aBsHtxhVVnT5RV70cpqfz";
 
     // эта функция расшифровывает имя пользователя из токена
     public String extractUsername(String token) {

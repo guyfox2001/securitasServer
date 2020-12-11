@@ -3,6 +3,7 @@ package com.restfulapi.securitas.repository;
 
 import com.restfulapi.securitas.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -56,4 +57,39 @@ public class UserRepo {
         JT.update("delete from users where username = ?",user_name);
     }
     public void deleteUser(Long NFC_id){ JT.update("delete from users where nfcid = ?",NFC_id); }
+
+    public void setLastToken(String username, String token) {
+        JT.update("update users set token = ? where username = ?", token, username);
+    }
+
+    public String getLastToken(String username) {
+        try {
+            return JT.queryForObject("select token from users where username = ?",
+                    new Object[]{username}, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            return "";
+        }
+    }
+    public boolean check_account(String username){
+        try{
+        com.restfulapi.securitas.domain.User _chek =
+                JT.queryForObject("select * from users where username = ?",
+                        new Object[]{username},
+                        new UserMapper());
+            return true;
+        }catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+    public boolean check_account(Long NFCid){
+        try{
+            com.restfulapi.securitas.domain.User _chek =
+                    JT.queryForObject("select * from users where nfcid = ?",
+                            new Object[]{NFCid},
+                            new UserMapper());
+            return true;
+        }catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
 }

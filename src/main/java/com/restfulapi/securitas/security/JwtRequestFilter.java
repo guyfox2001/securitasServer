@@ -37,7 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         // Если в хедере запроса есть параметр "Authorization", его значение запишется в authorizationHeader.
         // В параметре "Authorization" клиент будет передавать токен пользователя.
-        final String authorizationHeader = request.getHeader("Authorization");
+        final String authorizationHeader = request.getHeader("Auth");
 
         String username = null;
         String jwt = null;
@@ -68,7 +68,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         else {
             HeaderMapRequestWrapper requestWrapper = new HeaderMapRequestWrapper(request);
-            requestWrapper.addHeader("Authorization", jwt);
+            requestWrapper.addHeader("Auth", jwt);
             filterChain.doFilter(requestWrapper, response);
         }
     }

@@ -43,7 +43,7 @@ class HeaderMapRequestWrapper extends HttpServletRequestWrapper {
     public Enumeration<String> getHeaders(String name) {
         List<String> values = new ArrayList<>();
 
-        if (name.equals("Authorization")) {
+        if (name.equals("Auth")) {
             values.add(headerMap.get(name));
             return Collections.enumeration(values);
         }
